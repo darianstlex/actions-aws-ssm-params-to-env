@@ -1,7 +1,7 @@
-import * as AWS from '@aws-sdk/client-ssm';
+const { SSMClient } = require('@aws-sdk/client-ssm');
 
 const getParameters = async (ssmPath, getChildren, decryption, region) => {
-  const ssm = new AWS.SSM({ region });
+  const ssm = new SSMClient({ region });
 
   const promise = getChildren
     ? await ssm.getParametersByPath({
