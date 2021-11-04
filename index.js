@@ -62,11 +62,10 @@ function parseValue(val) {
 }
 
 function setEnvironmentVar({key, value, maskValue, maskVars = []}) {
-  console.log('SET ENV VAR', key, value, maskValue, maskVars);
   if (maskValue) {
     core.setSecret(value);
   }
-  if (maskVars && maskValue.length && maskVars.includes(key)) {
+  if (maskVars && maskVars.length && maskVars.includes(key)) {
     core.setSecret(value);
   }
   core.exportVariable(key, value);

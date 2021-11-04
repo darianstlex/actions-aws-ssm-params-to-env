@@ -10,7 +10,7 @@ variables in this action's step.
 ## Usage:
 
 ```yaml
-- uses: darianstlex/actions-aws-ssm-params-to-env@v1.3.8
+- uses: darianstlex/actions-aws-ssm-params-to-env@v1.3.9
   env:
     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # required
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # required
