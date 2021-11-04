@@ -5,13 +5,12 @@ simple JSON structures, or literal values. If you utilize the AWS action for set
 your credentials or assume a role, you will not need to explicitly include the AWS environment
 variables in this action's step.
 
-**Note**: this is a fork of this unmaintained repository: https://github.com/Bardavon-Health/actions-aws-ssm-params-to-env
-
+**Note**: this is a fork
 
 ## Usage:
 
 ```yaml
-- uses: darianstlex/actions-aws-ssm-params-to-env@v1.2.1
+- uses: darianstlex/actions-aws-ssm-params-to-env@v1.3.3
   env:
     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # required
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # required
@@ -47,6 +46,10 @@ Boolean which indicates whether the parameter should be decrypted or not
 Boolean which indicates if extracted values should be masked in
 GitHub action logs
 
+### mask-vars(optional)
+List which indicates if extracted variable should be masked in
+GitHub action logs
+
 ### **Note on decryption:**
 You should take care in utilizing encrypted values, as GitHub actions will not automatically redact
 the value of such parameters from your logs.
@@ -55,7 +58,7 @@ the value of such parameters from your logs.
 ## Example output:
 
 ### JSON data as the parameter value
-If you have an ssm parameter path of `/application/staging/parameter` with the following value:
+If you have a ssm parameter path of `/application/staging/parameter` with the following value:
 ``` JSON
 {
   "APPLICATION_URL": "https://api.com",
