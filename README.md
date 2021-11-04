@@ -11,7 +11,7 @@ variables in this action's step.
 ## Usage:
 
 ```yaml
-- uses: IP-Sentinel/actions-aws-ssm-params-to-env@v1.2.1
+- uses: darianstlex/actions-aws-ssm-params-to-env@v1.2.1
   env:
     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # required
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # required
@@ -22,6 +22,9 @@ variables in this action's step.
     prefix: SSM_ # optional
     decryption: true # optional, default false
     mask-values: true # optional, default false
+    mask-vars: | # optional, default []
+      VAR_NAME_TO_MASK
+      ANOTHER_TO_MASK
 ```
 ---
 ## Options:
