@@ -1,8 +1,8 @@
 const core = require('@actions/core');
 const ssm = require('./ssm-helper');
 
-const getInputAsArray = (name, options) => core
-  .getInput(name, options)
+const getInputAsArray = (name) => core
+  .getInput(name)
   .split("\n")
   .map(s => s.trim())
   .filter(x => x !== "");
@@ -61,7 +61,8 @@ function parseValue(val) {
   }
 }
 
-function setEnvironmentVar({key, value, maskValue, maskVars}) {
+function setEnvironmentVar({key, value, maskValue, maskVars = []}) {
+  console.log('SET ENV VAR', key, value, maskValue, maskVars);
   if (maskValue) {
     core.setSecret(value);
   }
