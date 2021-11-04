@@ -1,17 +1,17 @@
-const { SSMClient } = require('@aws-sdk/client-ssm');
+const { SSMClient, GetParametersByPathCommand, GetParametersCommand } = require('@aws-sdk/client-ssm');
 
 const getParameters = async (ssmPath, getChildren, decryption, region) => {
-  const ssm = new SSMClient({ region });
+  const client = new SSMClient({ region });
 
-  const promise = getChildren
-    ? await ssm.getParametersByPath({
+  const command = getChildren ? new GetParametersByPathCommand({
     Path: ssmPath,
     WithDecryption: decryption,
-  }) : await ssm.getParameters({
+  }) : new GetParametersCommand({
     Names: [ssmPath],
     WithDecryption: decryption,
-  })
-  return promise.Parameters;
+  });
+  const response = await client.send(command);
+  return response.Parameters;
 };
 
 module.exports = {getParameters};
