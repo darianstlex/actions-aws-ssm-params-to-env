@@ -1,6 +1,11 @@
 const core = require('@actions/core');
 const ssm = require('./ssm-helper');
-const parser = require('action-input-parser');
+
+const getInputAsArray = (name, options) => core
+  .getInput(name, options)
+  .split("\n")
+  .map(s => s.trim())
+  .filter(x => x !== "");
 
 async function run_action() {
   try {
@@ -10,9 +15,7 @@ async function run_action() {
     const region = process.env.AWS_DEFAULT_REGION;
     const decryption = core.getInput('decryption') === 'true';
     const maskValues = core.getInput('mask-values') === 'true';
-    const maskVars = parser.getInput('mask-vars', {
-      type: 'array',
-    });
+    const maskVars = getInputAsArray('mask-vars');
 
     const params = await ssm.getParameters(ssmPath, getChildren, decryption, region);
     for (let param of params) {
