@@ -1,28 +1,19 @@
-const AWS = require('aws-sdk');
+const { SSMClient, GetParametersByPathCommand, GetParametersCommand } = require('@aws-sdk/client-ssm');
 
 const getParameters = async (ssmPath, getChildren, decryption, region) => {
-  AWS.config.update({region: region});
-  const ssm = new AWS.SSM();
-  let params;
-  let promise;
-  if (getChildren) {
-    params =
-      {
-        Path: ssmPath,
-        WithDecryption: decryption,
-      };
-    promise = ssm.getParametersByPath(params).promise();
-  } else {
-    params =
-      {
-        Names: [ssmPath],
-        WithDecryption: decryption,
-      };
-    promise = ssm.getParameters(params).promise();
-    ;
-  }
-  const result = await promise;
-  return result.Parameters;
+  const client = new SSMClient({ region });
+
+  const command = getChildren
+    ? new GetParametersByPathCommand({
+    Path: ssmPath,
+    WithDecryption: decryption,
+    })
+    : new GetParametersCommand({
+      Names: [ssmPath],
+      WithDecryption: decryption,
+    });
+  const response = await client.send(command);
+  return response.Parameters;
 };
 
 module.exports = {getParameters};
